@@ -1,0 +1,93 @@
+@import "partials/base.scss";
+@import "partials/variables.scss";
+@import "partials/typography.scss";
+@import "partials/utility.scss";
+@import "partials/mixins.scss";
+@import "partials/functions.scss";
+// @import "partials/funtions.scss";
+
+@mixin block($heading-color, $btn-bg){
+    border: 1px solid $box-border;
+    width: 400px;
+    // height: 300px;
+    padding: $box-padding;
+    font-family: "Roboto", sans-serif;
+    border-radius: 5px;
+    // margin-bottom: 60px;
+
+    h2{
+        font-size: 30px;
+        margin: 0;
+        color: $heading-color;
+    }
+
+    a{
+        padding: 10px 10px;
+        width: 200px;
+        font-size: 16px;
+        color: $btn-bg;
+        text-decoration: none;
+    }
+}
+
+.box1{
+    @include block($color-primary);
+    background: map-get($colors,yellow-color);
+}
+
+// .box1 h2{
+//     color: $color-primary;
+// }
+.box1 p{
+    text-align: justify;
+    font-size: 16px;
+    font-family:'Courier New', Courier, monospace
+}
+.box1 a{
+    background-color: $color-primary;
+}
+
+.box1 a:hover{
+    background: darken($color-primary, 20%);
+}
+
+.box2{
+    @include block($color-black);
+    background: map-get($colors,green-color);
+}
+
+
+
+.box2 img{
+    width: 350px;
+
+}
+
+.box2 a{
+    background-color:blue;
+   
+}
+
+.box2 a:hover{
+    background: lighten(blue, 20%);
+}
+
+ul{
+    list-style-type: square;
+}
+
+ul li{
+    padding: 15px;
+}
+
+ul li a {
+    background: red;
+    display: inline-block;
+    padding: 10px;
+    color: $color-background;
+}
+
+ul li a:hover{
+    background: $color-primary;
+}
+
