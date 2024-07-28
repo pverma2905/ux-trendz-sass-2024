@@ -6,88 +6,387 @@
 @import "partials/functions.scss";
 // @import "partials/funtions.scss";
 
-@mixin block($heading-color, $btn-bg){
-    border: 1px solid $box-border;
-    width: 400px;
-    // height: 300px;
-    padding: $box-padding;
-    font-family: "Roboto", sans-serif;
-    border-radius: 5px;
-    // margin-bottom: 60px;
 
-    h2{
-        font-size: 30px;
-        margin: 0;
-        color: $heading-color;
-    }
-
-    a{
-        padding: 10px 10px;
-        width: 200px;
-        font-size: 16px;
-        color: $btn-bg;
-        text-decoration: none;
-    }
-}
 
 .box1{
-    @include block($color-primary);
+    @include block($color-primary,orange);
     background: map-get($colors,yellow-color);
 }
-
-// .box1 h2{
-//     color: $color-primary;
-// }
 .box1 p{
     text-align: justify;
     font-size: 16px;
     font-family:'Courier New', Courier, monospace
 }
-.box1 a{
-    background-color: $color-primary;
-}
-
 .box1 a:hover{
     background: darken($color-primary, 20%);
 }
 
 .box2{
-    @include block($color-black);
+    @include block($color-black,blue);
     background: map-get($colors,green-color);
+
+    img{
+        width: 350px;
+    }
+
+    a:hover{
+        background: lighten(blue, 20%);
+    }
 }
 
-
-
-.box2 img{
-    width: 350px;
-
-}
-
-.box2 a{
-    background-color:blue;
-   
-}
-
-.box2 a:hover{
-    background: lighten(blue, 20%);
-}
 
 ul{
     list-style-type: square;
+    li{
+        padding: 15px;
+    }
+    li a {
+        background: red;
+        display: inline-block;
+        padding: 10px;
+        color: $color-background;
+    }
+
+    li a:hover{
+        background: $color-primary;
+    }
 }
 
-ul li{
+//extend
+
+// .box{
+//     border:1px solid #ddd;
+//     padding: 15px;
+//     border-radius: 5px;
+//     width: 300px;
+// }
+
+// .greenbox{
+//     @extend .box;
+//     background: green;
+//     font-family: "Roboto", sans-serif;
+// }
+
+// .yellowbox{
+//     @extend .greenbox;
+//     background: yellow;
+// }
+
+
+
+// placeholder
+
+.box{
+    border:1px solid #ddd;
     padding: 15px;
+    border-radius: 5px;
+    width: 300px;
 }
 
-ul li a {
+.greenbox{
+    @extend .box;
+    background: green;
+    font-family: "Roboto", sans-serif;
+}
+
+.yellowbox{
+    @extend .greenbox;
+    background: yellow;
+}
+
+.btn{
+    padding: 7px 12px;
+    color: #454545;
+    border: 1px solid #ddd;
+    background: #f5f5f5;
+    border-radius: 5px;
+}
+
+.btn-success{
+    @extend .btn;
+    background:green;
+    color: #fff;
+}
+
+.btn-danger{
+    @extend .btn;
+    background:red;
+    color: #fff;
+}
+
+// [[sass built in function]]
+
+// 1) darken($colorName,15%)
+// 2) lighten($colorName,15%)
+// 3) mix(#ffcc00,#ccff00)
+// 4) map-get($map, $key)
+
+@function sum($val1, $val2){
+    @return $val1 + $val2;
+}
+
+.function{
     background: red;
-    display: inline-block;
-    padding: 10px;
-    color: $color-background;
+    border: 1px solid red;
+    font-family: "Roboto", sans-serif;
+    font-size: sum(50,20)*1px;
+    color: #fff;
 }
 
-ul li a:hover{
-    background: $color-primary;
+.function:hover{
+    // background: darken(red, 15%);
+    background: lighten(red, 15%);
+    background: mix(#ffcc00, red);
 }
+
+$baseUrl:'../images';
+
+@function normalImg($url){
+    @return url($baseUrl+$url);
+}
+
+@function mobileImg($url){
+    @return url($baseUrl+'mobile/'+$url);
+}
+
+.header{
+    background: url(../images/mobile/header.jpg);
+}
+
+.desktop{
+   background: normalImg('header.jpg');
+}
+
+.mobile{
+    background: mobileImg('header.jpg');
+}
+
+// operators
+
+// Equality Operators
+// == , !=
+
+// Comparision Operators
+// <,>, <=, >=
+
+// Numeric Operators
+// +, -, %, / 
+
+$val1: 10;
+$val2: 5;
+
+.myClass{
+    padding: $val1 % $val2 +px;
+}
+
+.myClass p{
+    font-size: $val1 +px;
+}
+
+.myClass button{
+    font-size: $val1 * 3 +px;
+}
+
+
+// saas interpolation
+// #{}
+
+$side:right;
+$value:50;
+
+.gap-#{$side}-#{$value}{
+    margin-#{$side}: 50px;
+}
+
+@mixin gap($side,$value, $pro){
+    #{$pro}-#{$side}:$value+px;
+}
+
+// .myClass{
+//     @include gap(left,200)
+// }
+
+.class2{
+    @include gap(left,70,padding);
+}
+
+.class3{
+    @include gap(left,70,margin);
+}
+
+// Sass If and Else condition
+// @if
+// @else
+
+//Case:1
+// $value:high;
+// .myClass{
+//    @if $value==high {margin: 100px;}
+//    @else if $value==low{margin:50px;}
+//    @else{margin: 20px;}
+// }
+
+//Case:2
+// @mixin myStyle($value) {
+//     font-size: $value + px;
+//     @if $value > 100 {color: green;}
+//     @else if $value > 150 {color: yellow;}
+//     @else{ color: blue; }
+// }
+
+// .myClass1{
+//     @include myStyle(50);
+// }
+
+
+//Case:3
+// @function getFontSize($type){
+//     @if $type == header{
+//         @return 30px;
+//     }
+
+//     @else if $type == footer{
+//         @return 50px;
+//     }
+
+//     @else{
+//         @return 20px; 
+//     }
+// }
+
+// header{
+//     font-size: getFontSize(header);
+// }
+
+// footer{
+//     font-size: getFontSize(footer);
+// }
+
+// body{
+//     font-size: getFontSize(body);
+// }
+
+// Case:4
+// *{
+//     margin: 0;
+//     padding: 0;
+// }
+
+@mixin box($boxStyle){
+    @if $boxStyle == dark{
+        background: #000000;
+        color: #ffffff;
+    }
+
+    @if $boxStyle == light{
+        background: #dddddd;
+        color: #000000;
+    }    
+}
+
+.myClass2{
+    width: 200px;
+    margin: 100px;
+    padding: 25px;
+    border-radius: 5px;
+    @include box(dark);
+}
+
+.myClass3{
+    width: 200px;
+    margin: 100px;
+    padding: 25px;
+    border-radius: 5px;
+    @include box(light);
+}
+
+
+// Sass @For Loop
+
+@for $i from 1 through 4{
+    .box-#{$i*100}{
+        width:#{$i*100}px;
+        background: darken(pink,$i*10%);
+    }
+}
+
+@for $i from 1 through 4{
+    .gap-left-#{$i}{
+        margin-left: $i*100px;
+    }
+}
+
+@for $i from 1 through 4{
+    .col-md-#{$i}{
+        width: $i*25%;
+    }
+}
+
+// Sass @Each Loop
+// Case 1
+// $devices: desktop, tablet, mobile;
+
+// @each $activeDevice in $devices {
+//     .#{activeDevice}{
+//         background: url(images/banner-#{$activeDevice}.jpg);
+//     }
+// }
+
+// Case 2 - Key Value Pair
+
+$devices: (desktop:50px, tablet:25px, mobile:15px);
+
+@each $activeDevice,$font-size in $devices {
+    .#{activeDevice}{
+        background: url(images/banner-#{$activeDevice}.jpg);
+        font-size: $font-size;
+    }
+}
+
+
+// Sass @While Loop
+
+$i: 4;
+@while $i >=0 {
+    .col-md-#{$i} {
+        width: #{$i * 20%};
+    }
+    $i: $i - 1;
+}
+
+@mixin device($breakpoint){
+    @if $breakpoint== tab-land {
+        @media (max-width:1200px){
+            @content;
+        }
+    }
+    @if $breakpoint== tab-port {
+        @media (max-width:900px){
+            @content;
+        }
+    }
+    @if $breakpoint== mobile {
+        @media (max-width:600px){
+            @content;
+        }
+    }
+}
+
+
+
+body{
+    background: red;
+    @include device(tab-land){
+        background: green;
+    }
+    @include device(tab-port){
+        background: blue;
+    }
+    @include device(mobile){
+        background: yellow;
+    }
+}
+
+
+
 

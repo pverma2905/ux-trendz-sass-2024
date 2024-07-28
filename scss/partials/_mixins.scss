@@ -1,0 +1,23 @@
+@mixin block($heading-color, $btn-bg){
+    border: 1px solid $box-border;
+    width: 400px;
+    // height: 300px;
+    padding: $box-padding;
+    font-family: "Roboto", sans-serif;
+    border-radius: 5px;
+    // margin-bottom: 60px;
+
+    h2{
+        font-size: 30px;
+        margin: 0;
+        color: $heading-color;
+    }
+
+    a{
+        padding: 10px 10px;
+        width: 200px;
+        font-size: 16px;
+        background-color: $btn-bg;
+        text-decoration: none;
+    }
+}
